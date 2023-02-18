@@ -11,11 +11,13 @@ if __name__ == '__main__':
 
 
 def parse_cookie(query: str) -> dict:
-    return {}
-
+    cookies = dict(map(lambda x:x.split('='), query.split(';')))
+    return cookies
 
 if __name__ == '__main__':
     assert parse_cookie('name=Dima;') == {'name': 'Dima'}
     assert parse_cookie('') == {}
     assert parse_cookie('name=Dima;age=28;') == {'name': 'Dima', 'age': '28'}
     assert parse_cookie('name=Dima=User;age=28;') == {'name': 'Dima=User', 'age': '28'}
+    assert parse_cookie('name=DimaUser;age= 28;') == {'name': 'Dima=User', 'age': ' 28'}
+    assert parse_cookie('name=DimaUser;age=28;rights=Admin') == {'name': 'Dima=User', 'age': '28', 'rights': 'Admin'}
